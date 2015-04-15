@@ -16,6 +16,8 @@ public class TestTool {
 	@Test
 	public void DateUtilTest() {
 		System.out.println(DateUtil.getStringFromDateByCommon(new Date()));
+		System.out.println(DateUtil.getStrFromDateByFormatStr(new Date(), 
+				DateUtil.YYYY_MM_DD_HH_MM_ss));
 	}
 
 }
