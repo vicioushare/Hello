@@ -6,11 +6,10 @@ import jpcap.packet.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
     
@@ -23,6 +22,8 @@ class Sniffer implements PacketReceiver {
     public void receivePacket(Packet packet) {
         
         String data = new String(packet.data);
+        System.out.println("-----1---1------");
+        System.out.println(data);
         String pack = new String(packet.toString());
         String B;
         
@@ -141,7 +142,7 @@ class Sniffer implements PacketReceiver {
     
     public static void main(String[] args) throws Exception {
     	Sniffer sniffer = new Sniffer();
-		NetworkInterface[] devices = JpcapCaptor.getDeviceList();
+    	NetworkInterface[] devices = JpcapCaptor.getDeviceList();
 		if (args.length<2) {
 			System.out.println("usage: sudo java Sniffer <select a number of desired device> <chikka or meebo>");
 			for (int i = 0; i < devices.length; i++) {
@@ -157,18 +158,27 @@ class Sniffer implements PacketReceiver {
 				}
 			}
 			jpcap = JpcapCaptor.openDevice(devices[5], 2000, true, 20);
-		//	jpcap.setFilter("host baidu.com", true);
+			jpcap.setFilter("host www.baidu.com", true);
 			while(true){
 				Packet p = jpcap.getPacket();
+			//	System.out.println(p);
 				if (null!=p) {
-				//	System.out.println(p);
-					sniffer.receivePacket(p);
+					System.out.println("---¿ªÊ¼-------");
+					String data = new String(p.data);
+					System.out.println(data);
+					System.out.println("---byte-------");
+					byte[] by =p.data;
+					for (byte b:by) {
+						System.out.print(Integer.toHexString(b&0xff) + ":");
+					//	System.out.print(b+" ");
+					}
+					System.out.println("-----½áÊø-----");
 				}
 				
 			}
 		}
 		else {
-			jpcap = JpcapCaptor.openDevice(devices[Integer.parseInt(args[0])], 2000, true, 20);
+			jpcap = JpcapCaptor.openDevice(devices[Integer.parseInt(args[0])], 20000, true, -1);
 			if (args[1].equals("chikka")) {
 				jpcap.setFilter("host chikka.com", true);
 				protocol = 0;
