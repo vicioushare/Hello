@@ -1,5 +1,10 @@
 package com.vicioushare.test;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.InputStreamReader;
+
 import jpcap.JpcapCaptor;
 import jpcap.NetworkInterface;
 import jpcap.NetworkInterfaceAddress;
@@ -19,12 +24,13 @@ public class PackageTest {
 		try {
 			JpcapCaptor jpcap;
 			NetworkInterface[] devices = JpcapCaptor.getDeviceList();
-			printNetDeviceInfo(devices[5]);
-			jpcap = JpcapCaptor.openDevice(devices[5], 2000, true, 20);
-		//	jpcap.setFilter("host 59.216.224.31", true);
-			jpcap.setFilter("ip", true);
+			printNetDeviceInfo(devices[4]);
+			jpcap = JpcapCaptor.openDevice(devices[4], 2000, true, 20);
+			// jpcap.setFilter("host 59.216.224.31", true);
+			// jpcap.setFilter("ip", true);
 			while (true) {
-				analysePackage(jpcap.getPacket());
+				analyseTcpPackage(jpcap.getPacket());
+				// analysePackage(jpcap.getPacket());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,7 +52,7 @@ public class PackageTest {
 			ICMPPacket arpPacket = (ICMPPacket) p;
 			System.out.println("\n" + arpPacket + "\n");
 		} else if (p instanceof TCPPacket) {
-			System.out.println("---ICMPPacket-------");
+			System.out.println("---TCP-------");
 			TCPPacket tcpPacket = (TCPPacket) p;
 			// System.out.println("\n" + tcpPacket + "\n");
 			EthernetPacket ethernetPacket = (EthernetPacket) p.datalink;
@@ -56,6 +62,9 @@ public class PackageTest {
 					+ ethernetPacket.getDestinationAddress() + "\n");
 			System.out.print("协议：" + tcpPacket.protocol + "\n");
 			System.out.print("数据：[");
+			System.out.println("---------");
+			System.out.println(charToString(tcpPacket.data));
+			System.out.println("---------");
 			for (int i = 0; i < tcpPacket.data.length; i++) {
 				System.out.print((char) tcpPacket.data[i]);
 			}
@@ -76,8 +85,7 @@ public class PackageTest {
 			}
 			System.out.print("] 数据");
 			System.out.println();
-		} else
-		if (null != p) {
+		} else if (null != p) {
 			System.out.println("---开始-------");
 			String data = new String(p.data);
 			System.out.println(data);
@@ -89,6 +97,29 @@ public class PackageTest {
 			System.out.println("-----结束-----");
 		}
 
+	}
+
+	public void analyseTcpPackage(Packet p) {
+		if (p instanceof TCPPacket) {
+			TCPPacket tcpPacket = (TCPPacket) p;
+			// System.out.println("\n" + tcpPacket + "\n");
+			EthernetPacket ethernetPacket = (EthernetPacket) p.datalink;
+			String data = charToString(tcpPacket.data);
+			if (data.contains("get") || data.contains("GET")) {
+				System.out.println("---TCP-------");
+				System.out.println("源IP：" + tcpPacket.src_ip + "目的IP：" + tcpPacket.dst_ip + "发送端口："
+						+ tcpPacket.src_port + "接收端口：" + tcpPacket.dst_port);
+				System.out.println("源MAC：" + ethernetPacket.getSourceAddress() + "目的MAC："
+						+ ethernetPacket.getDestinationAddress());
+				System.out.println("协议：" + tcpPacket.protocol);
+				if (data.contains("get") || data.contains("GET")) {
+					System.out.println("数据：[");
+					System.out.println(data);
+					System.out.println("] 数据");
+				}
+
+			}
+		}
 	}
 
 	/**
@@ -107,6 +138,25 @@ public class PackageTest {
 		for (NetworkInterfaceAddress a : device.addresses) {
 			System.out.println("    address:" + a.address + " " + a.subnet + " " + a.broadcast);
 		}
+	}
+
+	public String charToString(byte[] chars) {
+		try {
+			DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(chars));
+			String str = "";
+			String returnStr = "";
+			String encode = "utf-8";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(dataInputStream, encode));
+			StringBuffer sb = new StringBuffer();
+			while ((str = reader.readLine()) != null) {
+				sb.append(str).append("\n");
+			}
+			returnStr = sb.toString();
+			return returnStr;
+		} catch (Exception e) {
+			return null;
+		}
+
 	}
 
 }
