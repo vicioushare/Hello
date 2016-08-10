@@ -22,7 +22,6 @@ public class TestTool {
 	// 测试时间工具。
 	@Test
 	public void StringUtilTest() {
-	//	String content = "000 ,>\t\\\n\t 00dsj...\b\\t\t...\b\\";
 		String content = "\\\b\\";
 		String str1 = StringUtil.wrapXmlContent(content);
 		System.out.println(content);

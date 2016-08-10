@@ -24,9 +24,9 @@ public class PackageTest {
 		try {
 			JpcapCaptor jpcap;
 			NetworkInterface[] devices = JpcapCaptor.getDeviceList();
-			printNetDeviceInfo(devices[4]);
-			jpcap = JpcapCaptor.openDevice(devices[4], 2000, true, 20);
-			// jpcap.setFilter("host 59.216.224.31", true);
+			printNetDeviceInfo(devices[2]);
+			jpcap = JpcapCaptor.openDevice(devices[2], 2000, true, 20);
+			// jpcap.setFilter("host 116.116.116.116", true);
 			// jpcap.setFilter("ip", true);
 			while (true) {
 				analyseTcpPackage(jpcap.getPacket());
