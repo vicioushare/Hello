@@ -10,7 +10,13 @@ import java.util.Random;
 import org.junit.Test;
 
 public class MyTest01 {
+	
 	@Test
+	public void test005(){
+		double yzm =  Math.random()*10000;
+		System.out.println(yzm);
+	}
+
 	public void test004(){
 		List<String> features = Arrays.asList("Lambdas", "Default Method", "Stream API","Date and Time API");
 		features.forEach(n -> System.out.println(n));
