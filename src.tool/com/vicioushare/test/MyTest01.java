@@ -2,6 +2,8 @@ package com.vicioushare.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +12,55 @@ import java.util.Random;
 import org.junit.Test;
 
 public class MyTest01 {
-	
+	String name = "a";
 	@Test
+	public void test008(){
+		Long l1 = 100L;
+		Long l2 = 101L;
+		Long l3 = 100L;
+		
+		System.out.println(l1>l2);
+		System.out.println(l1==l3);
+		
+		
+		
+		String str = "11";
+		Long ln = Long.parseLong(str);
+		System.out.println(ln);
+		
+		/*System.out.println(""!=name);
+		System.out.println("a"!=name);
+		System.out.println(!"".equals(name));*/
+	}
+	
+	public void test007(){
+		Date now = new Date();
+		System.out.println(now);
+		Calendar date = Calendar.getInstance();
+		date.setTime(now);
+		System.out.println(date.get(Calendar.HOUR_OF_DAY));
+		
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append((date.get(Calendar.MONTH)+1)).append("ÔÂ").append(date.get(Calendar.DAY_OF_MONTH)).append("ÈÕ£¬");
+		sb.append(date.get(Calendar.HOUR_OF_DAY)).append(":").append(date.get(Calendar.MINUTE));
+		System.out.println(sb.toString());
+	}
+	
+	public void test006(){
+		String strs[]={"a","b","c","d"};
+		Map<Integer,String> map = new HashMap<Integer, String>();
+		map.put(1, "a");
+		map.put(2, "c");
+		
+		for (int i = 0; i < strs.length; i++) {
+			if(map.containsValue(strs[i])){
+				System.out.println("---"+strs[i]);
+			}
+		}
+	}
+	
+	
 	public void test005(){
 		double yzm =  Math.random()*10000;
 		System.out.println(yzm);
@@ -19,7 +68,7 @@ public class MyTest01 {
 
 	public void test004(){
 		List<String> features = Arrays.asList("Lambdas", "Default Method", "Stream API","Date and Time API");
-		features.forEach(n -> System.out.println(n));
+	//	features.forEach(n -> System.out.println(n));
 	//	()->System.out.println("==");
 		String fileNames=null;
 		String filePaths =null;

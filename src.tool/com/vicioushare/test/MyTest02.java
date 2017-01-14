@@ -1,13 +1,82 @@
 package com.vicioushare.test;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+
 public class MyTest02 {
+	@Test
+	public void test06() {
+		
+		System.out.println("/pt/gsgl/gsxq".startsWith("/pt/gsgl/"));
+		String url = "/pt/gsgl/gsxq.do";
+		System.out.println(url.matches("^*/pt/gsgl/*.do$"));
+
+		String filePath = "D:upoad/FileLibLocal";
+		String allFilePath = filePath.replace("FileLibLocal", "FileLibAll");
+		System.out.println(allFilePath);
+	}
+	
+	
+	public void test05() {
+		try {
+			  FileOutputStream fos = null;
+			  BufferedInputStream bis = null;
+			  HttpURLConnection httpUrl = null;
+			  URL url = null;
+			  byte[] buf = new byte[1024];
+			  int size = 0;
+
+			  url = new URL("http://sql:8088/ʡ/BULLETIN/201612211006103490.xls");
+			  httpUrl = (HttpURLConnection) url.openConnection();
+			  httpUrl.connect();
+			  System.out.println(httpUrl);
+			  bis = new BufferedInputStream(httpUrl.getInputStream());
+			  fos = new FileOutputStream(new File("D:/upload/test/20161101044458129.xlsx"));
+			  while ((size = bis.read(buf)) != -1)
+			   fos.write(buf, 0, size);
+			  fos.close();
+			  bis.close();
+			  httpUrl.disconnect();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void test04() {
+		try {
+			int bytesum = 0;    
+			int byteread = 0; 
+			File hasDownload = new File("D:/upload/test/20161101044458129.xlsx");
+			File remoteFile = new File("//sql/sqlfpt/upload/201612211006103490.xls");
+			InputStream inStream = new FileInputStream(remoteFile);     
+			FileOutputStream fs = new FileOutputStream(hasDownload);    
+			byte[] buffer = new byte[1444];    
+			while((byteread = inStream.read(buffer)) != -1){    
+				bytesum     +=     byteread;        
+				System.out.println(bytesum);    
+				fs.write(buffer,     0,     byteread);    
+			}    
+			inStream.close();   
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void test01() {
 		int[] a = { 5, 9, 3, 6, 7, 1 };
 		int minIndex = 0;
@@ -28,8 +97,6 @@ public class MyTest02 {
 			}
 		}
 	}
-
-	@Test
 	public void test02() {
 		List<Student> list = createStudent();
 		System.out.println("---");
@@ -37,6 +104,21 @@ public class MyTest02 {
 		list =  getRank(list,"getC");
 		System.out.println("---");
 		printStudent(list);
+	}
+
+	
+	public void test03() {
+		String re[] = new String[5];
+		for (int i = 0; i < re.length; i++) {
+			if(i!=2){
+				re[i]="aa"+i;
+			}
+		}
+		for (int i = 0; i < re.length; i++) {
+			System.out.println(re[i]);
+		}
+		
+		
 	}
 
 	public List<Student> getRank(List<Student> returnlist,String rankBy){
