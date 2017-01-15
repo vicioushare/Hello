@@ -77,7 +77,7 @@ public class CandATest {
 			if(!(_131415b &&_16b)){
 				_45s="SELECT SUM(Q4_S_1)/(SUM(Q4_S_C)-SUM(Q4_S_3))*100,(SUM(Q5_S_1)+SUM(Q5_S_3))/(SUM(Q5_S_C)-SUM(Q5_S_4))*100"
 						+ " into Q4_ALL,Q5_ALL"
-						+ "FROM T_SENSE_OF_SECURITY WHERE  YEAR in"
+						+ " FROM T_SENSE_OF_SECURITY WHERE  YEAR in"
 						+ " ("+sb.toString()+")"
 						+ " AND SUBCODE =S.SUBCODE;";
 			}
