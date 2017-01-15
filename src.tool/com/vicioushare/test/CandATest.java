@@ -27,8 +27,7 @@ public class CandATest {
 			writeStringInFile(file,"--/");
 			writeStringInFile(file,"declare Q1_ALL number(22,2);Q21_ALL number(22,2); Q3_ALL number(22,2); Q4_ALL number(22,2); Q5_ALL number(22,2);Q6_ALL number(22,2);Q7_ALL number(22,2); Q8_ALL number(22,2); ALL_P number(22,2);");
 			writeStringInFile(file,"begin");
-			writeStringInFile(file,"for S in(select * from SUBCODE_OF_ALLCITY ) loop ");
-			writeStringInFile(file,"Q1_ALL:=0; Q3_ALL:=0; Q4_ALL:=0; Q5_ALL:=0; Q6_ALL:=0; Q7_ALL:=0; Q8_ALL:=0; ALL_P:=0;");
+			writeStringInFile(file,"for S in(select * from SUBCODE_OF_ALLCITY_146 ) loop ");
 			
 			List<String> list = new ArrayList<String>();
 			for (int i = 1; i < years.length; i++) {
@@ -55,11 +54,15 @@ public class CandATest {
 		if (num==0) {
 			//处理年份
 			StringBuffer sb = new StringBuffer();
+			StringBuffer sb_insert = new StringBuffer();
+			sb_insert.append("'");
 			for (int i = 0; i < list.size(); i++) {
 				sb.append("'"+list.get(i)+"',");
+				sb_insert.append(""+list.get(i)+",");
 			}
 			sb.deleteCharAt(sb.length()-1);
-			
+			sb_insert.deleteCharAt(sb_insert.length()-1);
+			sb_insert.append("'");
 			//2、判断1368：全部年份一起计算
 			String _1368s = "SELECT (SUM(Q1_S_1)+SUM(Q1_S_2))/SUM(Q1_S_C)*100 ,(SUM(Q3_S_1)+SUM(Q3_S_2))/(SUM(Q3_S_C)-SUM(Q3_S_4))*100 ,(SUM(Q6_S_1)+SUM(Q6_S_2))/(SUM(Q6_S_C)-SUM(Q6_S_4))*100,(sum(Q8_S_1)+sum(Q8_S_2))/(sum(Q8_S_C)-sum(Q8_S_4))*100"
 					+ " into Q1_ALL,Q3_ALL，Q6_ALL,Q8_ALL "
@@ -111,6 +114,7 @@ public class CandATest {
 
 			//6、输出查询语句
 	//		System.out.println(_1368s);
+			writeStringInFile(file,"Q1_ALL:=0; Q3_ALL:=0; Q4_ALL:=0; Q5_ALL:=0; Q6_ALL:=0; Q7_ALL:=0; Q8_ALL:=0; ALL_P:=0;");
 			writeStringInFile(file,_1368s);
 			if(_45s.length()>0){
 		//		System.out.println(_45s);
@@ -128,11 +132,12 @@ public class CandATest {
 			String _insert = "INSERT INTO T_SENSE_OF_SECURITY_YEAR"
 					+ "(PK, YEAR, SUBCODE, NAME, PID,Q1_ALL, Q3_ALL, Q4_ALL, Q5_ALL, Q6_ALL,Q7_ALL, Q8_ALL, ALL_P, PNAME) VALUES"
 					+ "(sys_guid(),"
-					+ sb.toString()
+					+ sb_insert.toString()
 					+", S.SUBCODE, S.NAME, S.PID,  Q1_ALL, Q3_ALL, Q4_ALL, Q5_ALL, Q6_ALL,Q7_ALL, Q8_ALL, ALL_P, S.PNAME);";
 			  
 		//	System.out.println(_insert);
 			writeStringInFile(file,_insert);
+			writeStringInFile(file,"commit;");
 			return;
 		}
 		if (start==number.length) {
