@@ -9,11 +9,62 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import net.sf.json.JSONArray;
+
+import org.apache.tools.ant.types.CommandlineJava.SysProperties;
 import org.junit.Test;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+import com.vicioushare.tool.IDCardUtil;
 
 public class MyTest01 {
 	String name = "a";
 	@Test
+	public void test011(){
+		String test = "ABC,£¬123";
+		System.out.println(test);
+		test.replaceAll("£¬", ",");
+		System.out.println(test);
+		test =test.replaceAll("£¬", ","); 
+		System.out.println(test);
+	}
+	
+	public void test010(){
+		List<Object> list = new ArrayList<Object>();
+		list.add("c");
+		list.add("c");
+		list.add("c");
+		System.out.println(list);
+		JSONArray array = JSONArray.fromObject(list);
+		System.out.println(array);
+	}
+	
+	public void test009(){
+		String year = "+2015";
+		System.out.println(year.substring(0,1));
+		System.out.println(year.substring(1,5));
+		
+		
+		
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		List<String> temp = new ArrayList<String>();
+		temp.add("q");
+		temp.add("w");
+		temp.add("e");
+		temp.addAll(list);
+		
+		for (String str : temp) {
+			System.out.println(str);
+		}
+		
+		System.out.println("123EEee".toUpperCase());
+		System.out.println(IDCardUtil.IDCardValidate("53012919901209073X"));
+	}
+	
+	
 	public void test008(){
 		Long l1 = 100L;
 		Long l2 = 101L;

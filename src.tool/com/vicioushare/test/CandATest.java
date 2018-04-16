@@ -15,12 +15,12 @@ import org.junit.Test;
  */
 public class CandATest {
 	String[] years = new String[] { "2013", "2014", "+2015", "-2015", "2015",
-			"+2016", "-2016", "2016" };
+			"+2016", "-2016", "2016", "+2017" };
 
 	@Test
 	public void test() {
 		try {
-			File file = new File("D:\\test.sql");
+			File file = new File("D:\\year_2017.sql");
 			if(!file.exists()){
 				file.createNewFile();
 			}
@@ -70,12 +70,12 @@ public class CandATest {
 					+ " ("+sb.toString()+")"
 					+ " AND SUBCODE =S.SUBCODE;";
             
-            //3、判断45：（13——15）,（16）
+            //3、判断45：（13——15）,（16-2017）
 			String _45s = "";
 			//包含2013,2014,2015,-2015,+2015
 			boolean _131415b =sb.toString().contains("2013")||sb.toString().contains("2014")||sb.toString().contains("2015"); 
-			//包含 2016
-			boolean _16b =sb.toString().contains("2016"); 
+			//包含 2016,2017
+			boolean _16b =sb.toString().contains("2016")||sb.toString().contains("2017"); 
 			//如果不同时存在，合并计算，否则为默认值0
 			if(!(_131415b &&_16b)){
 				_45s="SELECT SUM(Q4_S_1)/(SUM(Q4_S_C)-SUM(Q4_S_3))*100,(SUM(Q5_S_1)+SUM(Q5_S_3))/(SUM(Q5_S_C)-SUM(Q5_S_4))*100"
@@ -105,12 +105,29 @@ public class CandATest {
 			if(sb.toString().equals("'-2015'")||sb.toString().equals("'2015'")){
 				_all = "SELECT ALL_P into ALL_P FROM T_SENSE_OF_SECURITY WHERE  YEAR ="+
 						sb.toString()+" AND SUBCODE =S.SUBCODE;"; 
-            }else if((!_131415b &&_16b) || (_1314_15b && !_16b)){
+            }else if(_1314_15b && !_16b){
             	_all = "SELECT (SUM(Q1_S_1)+SUM(Q1_S_2)+SUM(Q3_S_1)+SUM(Q3_S_2)+SUM(Q4_S_1)+SUM(Q5_S_1)+SUM(Q5_S_3)+SUM(Q6_S_1)+SUM(Q6_S_2)+SUM(Q8_S_1)+SUM(Q8_S_2))/(SUM(Q1_S_C)+(SUM(Q3_S_C)-SUM(Q3_S_4))+(SUM(Q4_S_C)-SUM(Q4_S_3))+(SUM(Q5_S_C)-SUM(Q5_S_4))+(SUM(Q6_S_C)-SUM(Q6_S_4))+(SUM(Q8_S_C)-SUM(Q8_S_4)))*100"
             			+ " into ALL_P FROM T_SENSE_OF_SECURITY WHERE  YEAR in "
             			+ " ("+sb.toString()+")"
 						+ " AND SUBCODE =S.SUBCODE;";
+            }else if(!_1314_15b &&_16b){
+            	_all = "SELECT (SUM(Q1_S_1)+SUM(Q1_S_2)+SUM(Q3_S_1)+SUM(Q3_S_2)"
+            			+ "+SUM(Q4_S_1)+SUM(Q41_S_1)+SUM(Q41_S_2)"
+            			+ "+SUM(Q5_S_1)+SUM(Q5_S_3)+SUM(Q51_S_1)+SUM(Q51_S_2)"
+            			+ "+SUM(Q6_S_1)+SUM(Q6_S_2)"
+            			+ "+SUM(Q7_S_1)+SUM(Q71_S_1)"
+            			+ "+SUM(Q8_S_1)+SUM(Q8_S_2))/(SUM(Q1_S_C)+(SUM(Q3_S_C)-SUM(Q3_S_4))"
+            			+ "+SUM(Q4_S_1)+SUM(Q4_S_2)+SUM(Q41_S_1)+SUM(Q41_S_2)+SUM(Q41_S_3)"
+            			+ "+SUM(Q5_S_1)+SUM(Q5_S_2)+SUM(Q5_S_3)+SUM(Q51_S_1)+SUM(Q51_S_2)+SUM(Q51_S_3)"
+            			+ "+(SUM(Q6_S_C)-SUM(Q6_S_4))"
+            			+ "+SUM(Q7_S_1)+SUM(Q7_S_2)"
+            			+ "+(SUM(Q8_S_C)-SUM(Q8_S_4)))*100"
+            			+ " into ALL_P FROM T_SENSE_OF_SECURITY WHERE  YEAR in "
+            			+ " ("+sb.toString()+")"
+						+ " AND SUBCODE =S.SUBCODE;";
             }
+			
+			
 
 			//6、输出查询语句
 	//		System.out.println(_1368s);
@@ -129,7 +146,7 @@ public class CandATest {
 				writeStringInFile(file,_all);
 			}
 			//7、生成插入语句
-			String _insert = "INSERT INTO T_SENSE_OF_SECURITY_YEAR"
+			String _insert = "INSERT INTO T_SENSE_OF_SECURITY_YEAR_2017"
 					+ "(PK, YEAR, SUBCODE, NAME, PID,Q1_ALL, Q3_ALL, Q4_ALL, Q5_ALL, Q6_ALL,Q7_ALL, Q8_ALL, ALL_P, PNAME) VALUES"
 					+ "(sys_guid(),"
 					+ sb_insert.toString()

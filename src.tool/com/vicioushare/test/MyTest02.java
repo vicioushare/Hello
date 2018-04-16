@@ -16,7 +16,72 @@ import org.junit.Test;
 
 public class MyTest02 {
 	@Test
+	public void test010(){
+		String str1 = null;
+		String str2 = null;
+		boolean test = (null ==str1&&null==str2)||(null !=str1&&null!=str2&&str1.equals(str2));
+		System.out.println(str1+"<-->"+str2+";ÏàÍ¬Ã´£º"+test);
+	}
+	
+	public void test09(){
+		String str = "1234567890ab";
+		System.out.println(str.substring(0, 8));
+		System.out.println(str.substring(10, 12));
+		
+		
+		
+		String test = "1.00";
+		try {
+			Float a = 10F;
+			Float b = 11F;
+			
+			System.out.println(Float.parseFloat(test));
+			System.out.println(a>b);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void test08(){
+		int m=5;
+		int[] list = {1,2,3,4,5,6,7,8,9,10};
+		int v = 1;
+		for (int i = 0; i<list.length; i = i+m) {
+			for(int j = 0; j < list.length; j++){
+				if(j>=i && j<m*v){
+					System.out.print(list[j]+" ");
+				}
+			}
+			v++;
+			System.out.println();
+		}
+	
+	}
+	public void test07(){
+		String mes = null;
+		
+		try {
+			if("".equals(mes)||null==mes){
+				System.out.println("--");	
+			}
+		//	return ;
+		} catch (Exception e) {
+			System.out.println("----------3---------");
+		} finally {
+			System.out.println("--------1-------");
+		}
+		System.out.println("---434---");
+		return ;
+	}
+	
 	public void test06() {
+		String a ="1";
+		float b =1;
+		System.out.println(Float.parseFloat(a));
+		System.out.println(b+"");
+		System.out.println();
+		System.out.println();
 		
 		System.out.println("/pt/gsgl/gsxq".startsWith("/pt/gsgl/"));
 		String url = "/pt/gsgl/gsxq.do";

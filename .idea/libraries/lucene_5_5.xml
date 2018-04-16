@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lucene-5.5">
+    <CLASSES>
+      <root url="file://D:/Tomcat/source&amp;jar/lucene-5.5.4" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://D:/Tomcat/source&amp;jar/lucene-5.5.4" />
+    </SOURCES>
+    <jarDirectory url="file://D:/Tomcat/source&amp;jar/lucene-5.5.4" recursive="false" />
+    <jarDirectory url="file://D:/Tomcat/source&amp;jar/lucene-5.5.4" recursive="false" type="SOURCES" />
+  </library>
+</component>

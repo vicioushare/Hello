@@ -19,6 +19,28 @@ import org.junit.Test;
  *
  */
 public class SgzzClient {
+	@Test
+	public void webserviceTest(){
+		try {
+			RPCServiceClient serviceClient = new RPCServiceClient();
+			Options options = serviceClient.getOptions();
+			options.setTimeOutInMilliSeconds(600000L);
+			EndpointReference targetEPR = new EndpointReference(
+					"http://59.216.224.31:8888/dataSwitching/services/HujiSvr");
+			options.setTo(targetEPR);
+			Class[] responseParam = new Class[] { String.class };
+			QName requestMethod = new QName("http://webservices.com", "queryHuji");
+			for (int i = 0; i < 1; i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("1", "1");
+				Object[] requestParam = new Object[] {map};
+				System.out.println(serviceClient.invokeBlocking(requestMethod,requestParam, responseParam)[0]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void test001(){
 		List<String> l1 =new ArrayList<String>();
@@ -36,7 +58,7 @@ public class SgzzClient {
 		System.out.println(l1.toString());
 	}
 	
-	@Test
+	
 	public void dataSwitching002(){
 		try {
 			RPCServiceClient serviceClient = new RPCServiceClient();

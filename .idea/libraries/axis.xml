@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="axis">
+    <CLASSES>
+      <root url="file://D:/Tomcat/source&amp;jar/axis" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/Tomcat/source&amp;jar/axis" recursive="false" />
+  </library>
+</component>
